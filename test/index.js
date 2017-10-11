@@ -1,4 +1,4 @@
-const SimplePool = require('../')
+const Pool = require('../')
 const mongodb = require('mongodb')
 
 const MongoClient = require('mongodb').MongoClient
@@ -13,11 +13,21 @@ function createMongodbConnection () {
   })
 }
 
+function closeMongodbConnection (db) {
+  db.close()
+}
+
 describe('module', () => {
-  describe('SimplePool', () => {
-    it('SimplePool should success', () => {
-      const mongoConnectionPool = new SimplePool({
-        create: createMongodbConnection
+  describe('Pool', () => {
+    it('Mongodb connection pool should success', () => {
+      const mongoConnectionPool = new Pool({
+        create: createMongodbConnection,
+        destroy: closeMongodbConnection
+      })
+
+      process.on('exit', (code) => {
+        mongoConnectionPool.destroy()
+        console.log(`About to exit with code: ${code}`)
       })
 
       let conn1, conn2
@@ -36,6 +46,8 @@ describe('module', () => {
         mongoConnectionPool.acquire().then(conn => {
           conn1 = conn
           mongoConnectionPool.info()
+
+          process.exit(0)
         })
       })
     })

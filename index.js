@@ -1,2 +1,2 @@
-const SimplePool = require('./lib/Pool')
-module.exports = SimplePool
+const Pool = require('./lib/Pool')
+module.exports = Pool

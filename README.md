@@ -1,3 +1,3 @@
-# Simple-Pool
+# Resource-Pool
 
 > Resource Pooling.

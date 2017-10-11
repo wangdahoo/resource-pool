@@ -1,5 +1,5 @@
 {
-  "name": "simple-pool",
+  "name": "resource-pool",
   "version": "0.1.0",
   "description": "Resource Pooling.",
   "main": "index.js",
