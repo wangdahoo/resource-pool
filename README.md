@@ -14,7 +14,8 @@ $ npm install resource-pool
 /* 以创建 mongodb 连接池为例 */
 
 const Pool = require('resource-pool')
-const mongodb = require('mongodb')
+const MongoClient = require('mongodb').MongoClient
+const MONGO_URI = 'mongodb://localhost:27017/some-mongodb'
 
 function createConnection () {
   return new Promise((resolve) => {
@@ -34,14 +35,15 @@ const pool = new Pool({
   destroy: closeConnection
 })
 
-pool.acquire().then(db => { // get resource instance from pool
-  let col = db.collection('articles')
+pool.acquire().then(({r, release}) => { // get resource from pool
+  // r is the resource instance, and it is the `db` boject here for mongodb
+  let col = r.collection('articles')
   col.insert({
     title: '从今天开始',
     description: '关心粮食和素材。我有一所房子，面朝大海，春暖花开。'
   })
-  // return the resource to pool
-  db.release()
+  // return to pool
+  release()
 })
 
 ```

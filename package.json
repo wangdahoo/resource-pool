@@ -1,8 +1,8 @@
 {
   "name": "resource-pool",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "Resource Pooling.",
-  "main": "index.js",
+  "main": "lib/Pool.js",
   "scripts": {
     "test": "mocha"
   },
